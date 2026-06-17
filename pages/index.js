@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -20,7 +21,7 @@ export default function Home() {
         <meta property="og:type" content="website" />
       </Head>
       <h1>Bienvenido</h1>
-      <img src={`${BASE_URL}/images/ARCH.jpg`} alt="SEO" style={{ maxWidth: '100%', height: 'auto' }} />
+      <Image src="/images/ARCH.jpg" alt="SEO" width={430} height={465} priority />
       <DynamicComponent />
     </>
   );
