@@ -1,20 +1,6 @@
+import { getAllPosts } from "../../lib/posts";
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
-// Simula obtención de datos desde una base de datos o CMS
-async function getDynamicRoutes() {
-  const posts = [
-    { slug: "guia-seo", updatedAt: "2026-06-15" },
-    { slug: "meta-tags", updatedAt: "2026-06-10" },
-    { slug: "sitemaps", updatedAt: "2026-06-05" },
-  ];
-
-  return posts.map((post) => ({
-    loc: `${BASE_URL}/blog/${post.slug}`,
-    lastmod: post.updatedAt,
-    changefreq: "weekly",
-    priority: 0.7,
-  }));
-}
 
 export default async function handler(req, res) {
   const staticRoutes = [
@@ -23,8 +9,16 @@ export default async function handler(req, res) {
     { loc: `${BASE_URL}/contacto`, lastmod: "2026-06-17", changefreq: "monthly", priority: 0.5 },
   ];
 
-  const dynamicRoutes = await getDynamicRoutes();
-  const allRoutes = [...staticRoutes, ...dynamicRoutes];
+  // Datos obtenidos desde la misma fuente (simula CMS/DB)
+  const posts = await getAllPosts();
+  const blogRoutes = posts.map((post) => ({
+    loc: `${BASE_URL}/blog/${post.slug}`,
+    lastmod: post.updatedAt,
+    changefreq: "weekly",
+    priority: 0.7,
+  }));
+
+  const allRoutes = [...staticRoutes, ...blogRoutes];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

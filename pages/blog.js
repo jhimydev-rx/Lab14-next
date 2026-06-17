@@ -1,14 +1,10 @@
 import Head from "next/head";
+import Link from "next/link";
+import { getAllPosts } from "../lib/posts";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-const posts = [
-  { slug: "guia-seo", title: "Guía Completa de SEO para 2026", excerpt: "Aprende las mejores técnicas de optimización para motores de búsqueda." },
-  { slug: "meta-tags", title: "Cómo Usar Meta Tags para Mejorar tu SEO", excerpt: "Los meta tags son esenciales para el posicionamiento web." },
-  { slug: "sitemaps", title: "Generación de Sitemaps Dinámicos en Next.js", excerpt: "Crea sitemaps automáticos para mejorar la indexación." },
-];
-
-export default function Blog() {
+export default function Blog({ posts }) {
   return (
     <>
       <Head>
@@ -24,11 +20,18 @@ export default function Blog() {
       <ul>
         {posts.map((post) => (
           <li key={post.slug}>
-            <h2>{post.title}</h2>
+            <Link href={`/blog/${post.slug}`}>
+              <h2>{post.title}</h2>
+            </Link>
             <p>{post.excerpt}</p>
           </li>
         ))}
       </ul>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const posts = await getAllPosts();
+  return { props: { posts } };
 }
