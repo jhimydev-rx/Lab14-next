@@ -3,7 +3,9 @@ import dynamic from "next/dynamic";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-const DynamicComponent = dynamic(() => import("../components/LargeComponent"), { ssr: false });
+const DynamicComponent = dynamic(() => import("../components/LargeComponent"), {
+  loading: () => <p>Cargando componente...</p>,
+});
 
 export default function Home() {
   return (
