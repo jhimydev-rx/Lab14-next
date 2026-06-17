@@ -20,6 +20,7 @@ export default function Home() {
         <meta property="og:type" content="website" />
       </Head>
       <h1>Bienvenido</h1>
+      <img src={`${BASE_URL}/images/ARCH.jpg`} alt="SEO" style={{ maxWidth: '100%', height: 'auto' }} />
       <DynamicComponent />
     </>
   );
